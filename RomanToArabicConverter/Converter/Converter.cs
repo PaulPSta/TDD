@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Converter
 {
@@ -17,9 +18,33 @@ namespace Converter
 
         public int Convert(string numeral)
         {
-            _romanToArabicMap.TryGetValue(numeral, out var result);
+            var characters = numeral.ToCharArray();
+
+            var result = 0;
+            for (var i = 0; i < characters.Length - 1; i++)
+            {
+                var sign = IsNextCharacterGreater(characters[i], characters[i + 1]) ? -1 : 1;
+                result += sign * _romanToArabicMap[characters[i].ToString()];
+            }
+
+            result += _romanToArabicMap[characters[^1].ToString()];
 
             return result;
+        }
+
+        private static bool IsNextCharacterGreater(char c1, char c2)
+        {
+            return c1 switch
+            {
+                'I' => (c2 == 'V' || c2 == 'X'),
+                'V' => false,
+                'X' => (c2 == 'L' || c2 == 'C'),
+                'L' => false,
+                'C' => (c2 == 'D' || c2 == 'M'),
+                'D' => (c2 == 'M'),
+                'M' => false,
+                _ => throw new ArgumentException()
+            };
         }
     }
 }
