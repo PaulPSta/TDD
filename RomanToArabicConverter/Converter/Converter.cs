@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Converter
 {
@@ -18,6 +19,9 @@ namespace Converter
 
         public int Convert(string numeral)
         {
+            if (!DoesNumeralContainValidCharacters(numeral))
+                throw new ArgumentException();
+
             var characters = numeral.ToCharArray();
 
             var result = 0;
@@ -45,6 +49,11 @@ namespace Converter
                 'M' => false,
                 _ => throw new ArgumentException()
             };
+        }
+
+        private static bool DoesNumeralContainValidCharacters(string numeral)
+        {
+            return new Regex(@"^[IVXLCDM]+$").IsMatch(numeral);
         }
     }
 }
