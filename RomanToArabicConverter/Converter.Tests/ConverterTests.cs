@@ -22,5 +22,21 @@ namespace Converter.Tests
             // assert
             Assert.That(result, Is.EqualTo(expected));
         }
+
+        [TestCase("IV", 4)]
+        [TestCase("XC", 90)]
+        [TestCase("CD", 400)]
+        [TestCase("MCM", 1900)]
+        public void Convert_ConvertComplexNumeral_WhenInputIsValid(string numeral, int expected)
+        {
+            // arrange
+            var converter = new Converter();
+
+            // act
+            var result = converter.Convert(numeral);
+
+            // assert
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }
