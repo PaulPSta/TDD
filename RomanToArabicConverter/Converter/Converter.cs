@@ -22,6 +22,9 @@ namespace Converter
             if (!DoesNumeralContainValidCharacters(numeral))
                 throw new ArgumentException("Numeral contains invalid characters!");
 
+            if (DoesNumeralContainInvalidSequence(numeral))
+                throw new ArgumentException("Numeral contains invalid sequence!");
+
             var characters = numeral.ToCharArray();
 
             var result = 0;
@@ -54,6 +57,20 @@ namespace Converter
         private static bool DoesNumeralContainValidCharacters(string numeral)
         {
             return new Regex(@"^[IVXLCDM]+$").IsMatch(numeral);
+        }
+
+        private static bool DoesNumeralContainInvalidSequence(string numeral)
+        {
+            var regex = @"/
+                    IIII|VV|XXXX|LL|CCCC|DD|MMMM|
+                    IIV|IIX|IL|IC|ID|IM|
+                    VX|VL|VC|VD|VM|
+                    XXL|XXC|XD|XM|
+                    LX|LC|LD|LM|
+                    DC|DM|
+            /".Replace("\r\n", "").Replace(" ", "");
+
+            return new Regex(regex).IsMatch(numeral);
         }
     }
 }
