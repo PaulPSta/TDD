@@ -38,5 +38,19 @@ namespace Converter.Tests
             // assert
             Assert.That(result, Is.EqualTo(expected));
         }
+
+        [TestCase("")]
+        [TestCase("!")]
+        [TestCase("A")]
+        [TestCase("m")]
+        public void Convert_ThrowsArgumentException_WhenInputContainsInvalidCharacter(string numeral)
+        {
+            // arrange
+            var converter = new Converter();
+
+            // act
+            // assert
+            Assert.That(() => converter.Convert(numeral), Throws.ArgumentException);
+        }
     }
 }
