@@ -52,5 +52,18 @@ namespace Converter.Tests
             // assert
             Assert.That(() => converter.Convert(numeral), Throws.ArgumentException);
         }
+
+        [TestCase("XXXX")]
+        [TestCase("LL")]
+        [TestCase("LXL")]
+        public void Convert_ThrowsArgumentException_WhenInputContainsInvalidSequence(string numeral)
+        {
+            // arrange
+            var converter = new Converter();
+
+            // act
+            // assert
+            Assert.That(() => converter.Convert(numeral), Throws.ArgumentException);
+        }
     }
 }
