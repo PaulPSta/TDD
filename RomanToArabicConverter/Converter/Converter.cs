@@ -20,7 +20,7 @@ namespace Converter
         public int Convert(string numeral)
         {
             if (!DoesNumeralContainValidCharacters(numeral))
-                throw new ArgumentException();
+                throw new ArgumentException("Numeral contains invalid characters!");
 
             var characters = numeral.ToCharArray();
 
